@@ -1,63 +1,54 @@
-package com.example.roteiro01.service;
+package com.labdessoft.roteiro01.service;
 
 import com.example.roteiro01.entity.Task;
 import com.example.roteiro01.entity.TaskType;
 import com.example.roteiro01.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public Task createTask(Task task) {
-        // Verifica se o tipo de tarefa está definido
         if (task.getTaskType() == null) {
-
-            task.setTaskType(TaskType.DATA.ordinal()); // Por exemplo, definindo como tipo "Data"
+            task.setTaskType(TaskType.DATA); // Define o tipo de tarefa como "Data"
         }
-        // Salva a tarefa no banco de dados
         return taskRepository.save(task);
     }
 
-    public Task getTaskById(Long taskId) {
-        // Recupera a tarefa do banco de dados
-        return taskRepository.findById(taskId).orElse(null);
+    public Optional<Task> getTaskById(Long taskId) {
+        return taskRepository.findById(taskId);
     }
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 
-    // Métodos abaixo precisam ser implementados
+    // Métodos abaixo precisam ser implementados com as lógicas específicas
     public List<Task> gerenciarTarefas() {
         // Implementar a lógica para gerenciar tarefas
-        // Exemplo: listar todas as tarefas do banco de dados
         return taskRepository.findAll();
     }
 
     public List<Task> concluirTarefas() {
         // Implementar a lógica para concluir tarefas
-        // Exemplo: listar todas as tarefas concluídas do banco de dados
         return taskRepository.findByCompleted(true);
     }
 
     public List<Task> priorizarTarefas() {
         // Implementar a lógica para priorizar tarefas
-        // Exemplo: listar todas as tarefas priorizadas do banco de dados
-        // Considere adicionar um campo na entidade Task para indicar a prioridade
-        // Exemplo: return taskRepository.findByPriority("high");
-        return taskRepository.findAll(); // Exemplo com lista completa (sem priorização)
+        return taskRepository.findByPriority("high");
     }
 
     public List<Task> categorizarTarefas() {
         // Implementar a lógica para categorizar tarefas
-        // Exemplo: listar todas as tarefas categorizadas do banco de dados
-        // Considere adicionar um campo na entidade Task para indicar a categoria
-        // Exemplo: return taskRepository.findByCategory("work");
-        return taskRepository.findAll(); // Exemplo com lista completa (sem categorização)
+        return taskRepository.findByCategory("work");
     }
 }
