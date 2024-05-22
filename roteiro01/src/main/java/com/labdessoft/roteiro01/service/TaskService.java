@@ -1,9 +1,9 @@
 package com.labdessoft.roteiro01.service;
 
-import com.example.roteiro01.entity.Task;
-import com.example.roteiro01.entity.TaskStatus;
-import com.example.roteiro01.entity.TaskType;
-import com.example.roteiro01.repository.TaskRepository;
+import com.labdessoft.roteiro01.entity.Task;
+import com.labdessoft.roteiro01.entity.TaskStatus;
+import com.labdessoft.roteiro01.entity.TaskType;
+import com.labdessoft.roteiro01.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,19 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    public Task obterTarefaPorId(Long id) {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            setTaskStatus(task);
+            return task;
+        }
+        return null;
+    }
+
     public Task criarTarefa(Task tarefa) {
         if (tarefa.getType() == TaskType.DATA && tarefa.getDueDate().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("A data da tarefas do tipo 'Data' tem que ser igual ou após a data atual.");
+            throw new IllegalArgumentException("A data de vencimento para tarefas do tipo 'Data' deve ser igual ou após a data atual.");
         }
         setTaskStatus(tarefa);
         return taskRepository.save(tarefa);
@@ -67,7 +77,7 @@ public class TaskService {
                 task.setStatus(TaskStatus.CONCLUIDA);
             }
         } else if (task.getType() == TaskType.PRAZO) {
-
+            // Lógica similar para tarefas do tipo Prazo
         } else {
             if (task.getCompleted()) {
                 task.setStatus(TaskStatus.CONCLUIDA);

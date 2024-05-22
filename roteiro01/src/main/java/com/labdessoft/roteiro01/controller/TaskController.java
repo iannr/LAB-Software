@@ -1,8 +1,8 @@
 package com.labdessoft.roteiro01.controller;
 
-import com.example.roteiro01.entity.Task;
-import com.example.roteiro01.service.TaskService;
-import com.example.roteiro01.model.ErrorMessage;
+import com.labdessoft.roteiro01.entity.Task;
+import com.labdessoft.roteiro01.service.TaskService;
+import com.labdessoft.roteiro01.Model.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> obterTarefa(@PathVariable Long id) {
+    public ResponseEntity<Task> obterTarefa(@PathVariable Long id) {
         Task tarefa = taskService.obterTarefaPorId(id);
         if (tarefa != null) {
             return ResponseEntity.ok(tarefa);
@@ -40,9 +40,8 @@ public class TaskController {
         }
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Object> atualizarTarefa(@PathVariable Long id, @Valid @RequestBody Task tarefa) {
+    public ResponseEntity<Task> atualizarTarefa(@PathVariable Long id, @Valid @RequestBody Task tarefa) {
         Task tarefaAtualizada = taskService.atualizarTarefa(id, tarefa);
         if (tarefaAtualizada != null) {
             return ResponseEntity.ok(tarefaAtualizada);

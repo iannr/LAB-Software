@@ -24,16 +24,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema(name = "Descrição da tarefa deve ter pelo menos 10 caracteres")
-    @Size(min = 10, message = "Descrição da tarefa deve ter pelo menos 10 caracteres")
+    @Schema(name = "Descrição da tarefa deve possuir pelo menos 10 caracteres")
+    @Size(min = 10, message = "Descrição da tarefa deve possuir pelo menos 10 caracteres")
     private String description;
 
     private Boolean completed;
 
     private TaskType type; // Tipo de tarefa
-    private Long deadlineInDays; // Prazo
+    private Long deadlineInDays; // Prazo em dias
     private LocalDate dueDate; // Data de vencimento
-    private Priority priority; // Nível da prioridade
+    private com.example.roteiro01.entity.Priority priority; // Nível de prioridade
     private TaskStatus status; // Status da tarefa
 
     public Task(String description){
@@ -54,4 +54,3 @@ public class Task {
                 '}';
     }
 }
-
