@@ -33,10 +33,10 @@ public class Task {
     private TaskType type; // Tipo de tarefa
     private Long deadlineInDays; // Prazo em dias
     private LocalDate dueDate; // Data de vencimento
-    private com.example.roteiro01.entity.Priority priority; // Nível de prioridade
+    private Priority priority; // Nível de prioridade
     private TaskStatus status; // Status da tarefa
 
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
     }
 

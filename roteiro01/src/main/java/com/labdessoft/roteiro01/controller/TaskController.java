@@ -12,7 +12,6 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
 public class TaskController {
 
     @Autowired
@@ -56,7 +55,7 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/tasks")
     public ResponseEntity<List<Task>> obterTodasTarefas() {
         List<Task> tarefas = taskService.obterTodasTarefas();
         return ResponseEntity.ok(tarefas);
